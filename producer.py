@@ -19,6 +19,6 @@ def main(stream_key, sensor_id):
 
 
 if __name__ == "__main__":
-    stream_key = "app:event"
+    stream_key = "app_event"
     sensor = sys.argv[1]
     main(stream_key, sensor)
