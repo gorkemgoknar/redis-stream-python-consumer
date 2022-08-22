@@ -28,7 +28,7 @@ def queueCheck():
         return True
 
 # no password required Rediswq is just a quick fast implementation
-q = rediswq.RedisWQ(name=listname, host=host, ssl=use_ssl)
+q = rediswq.RedisWQ(name=listname, host=host, ssl=use_ssl, socket_timeout= 10)
 
 print("Worker with sessionID: " +  q.sessionID())
 print("Initial queue state: empty=" + str(q.empty()))
