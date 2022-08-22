@@ -10,11 +10,14 @@ host = os.getenv("REDIS_SERVICE_HOST")
 listname = os.getenv("REDIS_LIST_NAME")
 leaseSeconds = int(os.getenv("REDIS_LEASE_SECONDS", default="30")) # Env variable is string
 terminate_on_empty_list = (os.getenv("REDIS_TERMINATE_EMPTY_LIST", default=False) == 'True')
+use_ssl =  (os.getenv("REDIS_USE_SSL", default=True) == 'True')
 
 if not terminate_on_empty_list:
     print("If want to terminate pod on empty list set REDIS_TERMINATE_EMPTY_LIST to True")
 else:
     print("Pod will check queue forever, or until crashed")
+
+
 
 def queueCheck():
     if terminate_on_empty_list:
@@ -25,7 +28,7 @@ def queueCheck():
         return True
 
 # no password required Rediswq is just a quick fast implementation
-q = rediswq.RedisWQ(name=listname, host=host)
+q = rediswq.RedisWQ(name=listname, host=host, ssl=use_ssl)
 
 print("Worker with sessionID: " +  q.sessionID())
 print("Initial queue state: empty=" + str(q.empty()))
